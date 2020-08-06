@@ -1,0 +1,93 @@
+% Garek Dyszel's LaTeX notes preamble.
+% Adapted from Gilles Castel's preamble at https://github.com/gillescastel/university-setup.
+
+% Some basic packages
+\usepackage[utf8]{inputenc} % utf-8 encoding
+\usepackage[margin=0.5in]{geometry} % set margin size
+\usepackage{graphicx} % include any png or jpg files
+\usepackage{siunitx} % SI units
+\usepackage{float} % let figures decide where they want to go
+\usepackage{pdfpages} % Include other pdfs
+\usepackage{hyperref} % Reference anything else in or out of the document
+\usepackage{mathptmx} % Times New Roman
+% \usepackage[style=ieee, backend=biber]{biblatex} % citations in IEEE format
+% \addbibresource{./bibliography.bib} % bibliography source file
+\linespread{1} % single spacing for life!
+\usepackage[tiny]{titlesec} % set titles the same size as text
+
+\titlespacing{\section}{0pt}{2pt}{2pt} % set spacing around section titles
+\titlespacing{\subsection}{0pt}{2pt}{2pt}
+
+\pdfminorversion=7
+
+% Don't indent paragraphs, leave some space between them
+\usepackage{parskip}
+
+% Math stuff
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+% Bold math
+\usepackage{bm}
+% Some shortcuts
+\newcommand\N{\ensuremath{\mathbb{N}}}
+\newcommand\R{\ensuremath{\mathbb{R}}}
+\newcommand\Z{\ensuremath{\mathbb{Z}}}
+\renewcommand\O{\ensuremath{\emptyset}}
+\newcommand\Q{\ensuremath{\mathbb{Q}}}
+\newcommand\C{\ensuremath{\mathbb{C}}}
+
+% Put x \to \infty below \lim
+\let\svlim\lim\def\lim{\svlim\limits}
+
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+% hide parts
+% \newcommand\hide[1]{}
+
+% Environments
+\makeatother
+% For box around Definition, Theorem, \ldots
+\usepackage{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em}
+\theoremstyle{definition}
+
+
+\newmdtheoremenv[nobreak=true]{definition}{Definition}
+\newtheorem*{eg}{Example}
+\newtheorem*{notation}{Notation}
+\newtheorem*{previouslyseen}{As previously seen}
+\newtheorem*{remark}{Remark}
+\newtheorem*{note}{Note}
+\newtheorem*{problem}{Problem}
+\newtheorem*{observe}{Observe}
+\newtheorem*{property}{Property}
+\newtheorem*{intuition}{Intuition}
+\newmdtheoremenv[nobreak=true]{prop}{Proposition}
+\newmdtheoremenv[nobreak=true]{theorem}{Theorem}
+\newmdtheoremenv[nobreak=true]{corollary}{Corollary}
+
+% End example and intermezzo environments with a small diamond (just like proof
+% environments end with a small square)
+\usepackage{etoolbox}
+\AtEndEnvironment{vb}{\null\hfill$\diamond$}%
+\AtEndEnvironment{intermezzo}{\null\hfill$\diamond$}%
+% \AtEndEnvironment{opmerking}{\null\hfill$\diamond$}%
+
+% Fix some spacing
+% http://tex.stackexchange.com/questions/22119/how-can-i-change-the-spacing-before-theorems-with-amsthm
+\makeatletter
+\def\thm@space@setup{%
+  \thm@preskip=\parskip \thm@postskip=0pt
+}
+
+
+% %http://tex.stackexchange.com/questions/76273/multiple-pdfs-with-page-group-included-in-a-single-page-warning
+\pdfsuppresswarningpagegroup=1
+
+
+% turn off date
+\author{Garek Dyszel}
+\date{}
+

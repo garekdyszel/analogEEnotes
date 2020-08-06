@@ -1,0 +1,29 @@
+\documentclass[12pt]{article}
+\input{./preamble.tex}
+\setcounter{secnumdepth}{-1}
+
+\title{stuff}
+\begin{document}
+\includepdf{cover_page.pdf}
+\newpage
+\tableofcontents
+\newpage
+    Stuff bro
+    \section{something}
+    \subsection{something else}
+    \subsubsection{a third thing}
+    stuff happened
+\begin{equation}
+  \label{eq:1}
+    f(a) =\frac{1}{2 \pi i}\ \int_{C} \frac{f(z)}{z-a}dz
+\end{equation}
+
+\begin{equation}
+\label{eq:2}
+f(a) =\frac{1}{2\pi i}\ \int_{C} \frac{f(z)}{z-a}dz \iff something
+\end{equation}
+\hr
+
+
+\end{document}
+

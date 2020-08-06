@@ -1,0 +1,30 @@
+%%% TeX-command-extra-options: "--output-directory=build"
+\documentclass{amsart}
+\usepackage[margin=1in]{geometry}
+\usepackage{afterpage}
+\usepackage{tikz}
+\usepackage{mathptmx}
+\usetikzlibrary{fadings}
+\usepackage{background}
+\backgroundsetup{
+scale=1,
+angle=0,
+opacity=0.6,  %% adjust
+contents={\includegraphics[width=\paperwidth,height=\paperheight]{coffee_bubbles.jpg}}
+}
+
+\begin{document}
+
+\vspace*{\fill}
+
+\begin{flushleft}
+\Huge{\textbf{Garek Dyszel's \LaTeX'ed Lecture Notes}}
+  
+\Large{for his BSc in Electrical Engineering}
+\end{flushleft}
+
+\vspace*{\fill}
+
+\tiny{Image credit: JustSlipAway at https://i.redd.it/pxgbyghuv1d51.jpg}
+
+\end{document}
