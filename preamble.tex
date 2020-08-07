@@ -10,13 +10,17 @@
 \usepackage{pdfpages} % Include other pdfs
 \usepackage{hyperref} % Reference anything else in or out of the document
 \usepackage{mathptmx} % Times New Roman
-% \usepackage[style=ieee, backend=biber]{biblatex} % citations in IEEE format
+\usepackage[style=ieee, backend=biber]{biblatex} % citations in IEEE format
 % \addbibresource{./bibliography.bib} % bibliography source file
 \linespread{1} % single spacing for life!
 \usepackage[tiny]{titlesec} % set titles the same size as text
 
 \titlespacing{\section}{0pt}{2pt}{2pt} % set spacing around section titles
 \titlespacing{\subsection}{0pt}{2pt}{2pt}
+\titlespacing{\chapter}{0pt}{2pt}{2pt}
+
+\titleformat*{\subsection}{\normalfont}
+\titleformat*{\subsubsection}{\normalfont}
 
 \pdfminorversion=7
 
