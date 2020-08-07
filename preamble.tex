@@ -19,8 +19,13 @@
 \titlespacing{\subsection}{0pt}{2pt}{2pt}
 \titlespacing{\chapter}{0pt}{2pt}{2pt}
 
-\titleformat*{\subsection}{\normalfont}
+\titleformat*{\subsection}{\normalfont} % make sections below \section not bold
 \titleformat*{\subsubsection}{\normalfont}
+\titleformat{\chapter}[hang] 
+{\normalfont\Large\bfseries}{\chaptertitlename\ \thechapter:}{0.25em}{} % get chapter name and number on the same line
+% for chapter format, see https://tex.stackexchange.com/questions/25030/chapter-number-and-chapter-title-in-one-line/25031#25031
+
+
 
 \pdfminorversion=7
 
