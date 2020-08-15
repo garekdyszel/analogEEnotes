@@ -1,7 +1,17 @@
 %%% TeX-command-extra-options: "--output-directory=build"
 \documentclass[12pt]{report}
 \input{./preamble.tex}
-% \addbibresource{./bibliography.bib}
+\addbibresource{./bibliography.bib}
+
+\renewcommand\Re{\operatorname{Re}}
+\renewcommand\Im{\operatorname{Im}}
+
+% page number in lower-right-hand corner
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{} % empty the header and the footer
+\renewcommand{\headrulewidth}{0pt} % remove horizontal line for header
+\fancyfoot[R]{\thepage} % page number in lower-right-hand corner
 
 % use \hr for any horizontal rules!
 
@@ -10,19 +20,176 @@
 \newpage
 \tableofcontents
 \newpage
-\chapter{Analog Circuits}
+\chapter{Analog Circuits} \hr
 \section{Basic Circuit Elements and Frequency Response}
 \subsection{Resistors, Capacitors, Inductors, and Impedances}
 % a resistor looks like x. It has y defining equation.
 % voltage dividers and current dividers
+Ohm's Law:
+\begin{equation}
+\label{eq:1}
+V = Z I,
+\end{equation}
+where $V$ is the voltage, $Z$ is the impedance, and $I$ is the current. This is the defining equation for impedance.
+Because of the form of this equation, each circuit element is defined in terms of its $V \-- I$ relationship. The element relationships derived from device physics are
+\begin{equation}
+\label{eq:2}
+V = R I ~\text{(resistor)},
+\end{equation}
+\begin{equation}
+\label{eq:3}
+I = C \frac{dV}{dt} ~\text{(capacitor)},
+\end{equation}
+and
+\begin{equation}
+\label{eq:4}
+V = L \frac{dI}{dt} ~\text{(inductor)}.
+\end{equation}
+The $s$-parameters are useful for simplifying circuit analysis. They are defined as
+\begin{equation}
+\label{eq:5}
+s = \sigma + j \omega,
+\end{equation}
+where $j = \sqrt{-1}$, $\Re\{ s \} = \sigma$, and $\Im\{ s \} = \omega$. The variable $\sigma$ accounts for any initial conditions in the system, and $\omega$ is the system frequency. We can use $s$-parameters to solve networks with \textit{zero} initial conditions in \textit{steady-state}. They reduce the derivatives to simple algebra in $\C$. Now, if $\sigma = 0$ in (\ref{eq:5}), the Laplace transformation (the $s$-representation) is equivalent to the Fourier transform (the $j \omega$-representation), because whatever \textit{real-valued} signal you're working with will converge to the same thing for both. Then you're allowed to say
+\begin{equation}
+\label{eq:6}
+s = j \omega,
+\end{equation}
+like we're typically told in EE classes. (I don't know the details of how that works, but we don't need to know. Not unless we want to be DSP specialists.)
+If the relation (\ref{eq:6}) holds, then we can transform the element relationships to
+\begin{equation}
+\label{eq:7}
+V = R I ~\text{(resistor, no change)},
+\end{equation}
+\begin{equation}
+\label{eq:8}
+V = \frac{1}{s C} I ~\text{(capacitor)},
+\end{equation}
+and
+\begin{equation}
+\label{eq:9}
+V = s L I ~\text{(inductor)}.
+\end{equation}
+The impedance is defined in terms of $V$ and $I$ through Ohm's Law in (\ref{eq:1}) as
+\begin{equation}
+\label{eq:10}
+Z = \frac{V}{I}.
+\end{equation}
+If we solve for $\frac{V}{I}$ in each of the transformed element equations, we end up with
+\begin{equation}
+\label{eq:11}
+Z = R ~\text{(resistor)},
+\end{equation}
+\begin{equation}
+\label{eq:12}
+Z = \frac{1}{s C} ~\text{(capacitor)},
+\end{equation}
+and
+\begin{equation}
+\label{eq:13}
+Z = s L ~\text{(inductor)}.
+\end{equation}
+\subsection{Transfer Functions, Poles, Zeros and Stability}
+A transfer function is any function that takes an input and gives an output. It can be any of the following:
+\begin{itemize}
+\item voltage gain
+ \begin{equation}
+\label{eq:14}
+G_{v}(s) = \frac{V_{o}}{V_{in}}.
+\end{equation}
+\item current gain
+  \begin{equation}
+\label{eq:15}
+G_{in}(s) = \frac{I_{o}}{I_{in}}.
+\end{equation}
+\item transimpedance
+    \begin{equation}
+  \label{eq:16}
+Z(s) = \frac{V_{o}}{I_{in}}.
+\end{equation}
+\item transadmittance
+  \begin{equation}
+  \label{eq:17}
+Y(s) = \frac{I_{o}}{V_{in}}.
+\end{equation}
+\item driving-point transimpedance
+  \begin{equation}
+  \label{eq:18}
+Z_{dp}(s) = \frac{V_{1}}{I_{1}}.
+\end{equation}  
+ \item driving-point transadmittance
+  \begin{equation}
+  \label{eq:19}
+Y_{dp}(s) = \frac{I_{1}}{V_{1}}.
+\end{equation}  
+\end{itemize}
+The difference between the transadmittance/-impedances and their driving-point variants is the driving-point ones have their input and output at the same port, say port (1). All the other transfer functions have their input and output at different ports, say ports (2) and (3).
+Let's consider an arbitrary transfer function $H(s)$ with numerator $N(s)$ and denominator $D(s)$,
+\begin{equation}
+\label{eq:20}
+H(s) = \frac{N(s)}{D(s)},
+\end{equation}
+where both $N(s)$ and $D(s)$ are allowed to be some arbitrary functions of $s$. We refer to these functions as ``characteristic equations''. For example,
+\begin{equation}
+\label{eq:21}
+D(s) = 1 + \frac{1}{Q} \left( \frac{s}{\omega_{\,0}} \right) + \left( \frac{s}{\omega_{\,0}} \right)^{2}
+\end{equation}
+is one such valid $D(s)$. The numerator $N(s)$ is allowed to take any form that $D(s)$ can. Now, how do we determine both the numerator and denominator of $H(s)$? It turns out that finding the \textit{roots} of both $N(s)$ and $D(s)$ is enough to determine the whole transfer function $H(s)$. In other words, all you have to do is find out what the circuit's transfer function is when the excitation $E(s) = D(s) = 0$ and when the response $R(s) = N(s) = 0$, separately. The roots of $D(s)$ correspond to \textit{poles} in the circuit. The $N(s)$ roots correspond to \textit{zeros} in the circuit. So what are poles and zeros, anyway? They correspond to what happens in the transfer function when we let $s \rightarrow 0$. Under that condition, the circuit's input becomes some dc signal.
+\begin{align}
+\label{eq:22}
+ \text{Poles}\ D(s) \colon \ s \rightarrow 0 \  \text{s.t.} \  H(s) \rightarrow \infty. \\
+\text{Zeros}\ N(s) \colon \ s \rightarrow 0 \  \text{s.t.} \  H(s) = 0.
+\end{align}
+The entire goal of circuit analysis is figuring out what form the transfer function takes. When we have tons of reactive elements, that gets impractical, so we use simulations. In theory, you \textit{could} write down the entire transfer function analytically. In practice, if you have more than 7-ish reactive elements, it's not wise to analyze the entire circuit using analytical methods. At least, not unless you plan on breaking the circuit into subcircuits.
+
+\subsection{KVL and KCL}
+KVL: sum of the voltage drops around a closed, 2-dimensional loop equals zero.
+\begin{equation}
+\label{eq:24}
+\sum_{n} V_{n} = 0
+\end{equation}
+One such equation might look like
+\begin{equation}
+\label{eq:25}
+V_{in} + I_{in} R = 0.
+\end{equation}
+KCL: sum of the currents entering/exiting a node equals zero.
+\begin{equation}
+\label{eq:26}
+\sum_{n} I_{n} = 0
+\end{equation}
+One such equation might look like
+\begin{equation}
+\label{eq:27}
+I_{in} + \frac{V_{in}}{R} = 0.
+\end{equation}
+Both KVL and KCL are valid, necessary, and sufficient for dc and steady-state ac circuits. For transient analysis, they are still valid but no longer enough: you need to be able to solve the differential equations involved (numerically or symbolically).
 \section{Silicon Device Models, No Derivations}
 \subsection{Diodes}
-\subsection{Transistors: MOSFETs and BJTs}
+The model for a diode's $I \- V$ characteristic  based on device physics is
+\begin{equation}
+\label{eq:28}
+I = I_{s} \exp \left( \frac{V_{D}}{V_{T}} \right),
+\end{equation}
+where $I_{s} \approx O(\SI{1}{aA} \-- \SI{1}{fA})$ is the saturation current, $V_{D}$ is the voltage across the diode, and $V_{T}$ is the thermal voltage. The thermal voltage $V_{T}$ is given by
+\begin{equation}
+  \begin{aligned}
+\label{eq:29}
+V_{T} &= \frac{k_{B} T}{q} \\ &= \frac{\left( \SI{8.617e-5}{\electronvolt \per \kelvin} \right) \left( \SI{300}{\kelvin} \right) }{ \left( \SI{1}{\electronvolt} \right) } = \SI{25.85}{\milli \volt}
+\end{aligned}
+\end{equation}
+at $T = \SI{300}{\kelvin} = \SI{26.85}{\celsius}$, a few degrees warmer than room temperature. If you apply too much current through or voltage across the diode, it will enter the breakdown region. At that point, the exponential model (\ref{eq:28}) is invalid, and Ohm's Law takes over. That can screw up the diode, so don't do that.
+\subsection{Transistors: BJTs and MOSFETs}
+
 \subsection{Op-Amps}
 \section{Fast Analytical Techniques}
-\subsection{Extra Element Theorem and N-Extra Element Theorem}
+\subsection{N-Extra Element Theorem}
 \subsection{Input-Output Impedance Theorem}
 \subsection{Better Feedback Theorem}
+\section{Common Subcircuits}
+\subsection{Voltage and Current Dividers}
+\subsection{Amplifier Configurations with Op Amps and Transistors}
+
 
 \newpage
 \chapter{Digital Circuits}
