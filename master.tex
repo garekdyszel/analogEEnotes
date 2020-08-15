@@ -20,6 +20,11 @@
 \newpage
 \tableofcontents
 \newpage
+\chapter*{Organization}
+\addcontentsline{toc}{chapter}{Organization}
+For the Analog Circuits stuff, I organized by devices, then by techniques. This is intended to be a quick reference, so I thought it would be more convenient that way.
+
+The Fast Analytical Techniques were adapted from (\textbf{middlebrook's lectures and vorpérian's book}), and the introductory silicon device material was adapted from (\textbf{sedra and smith, 8e}).
 \chapter{Analog Circuits} \hr
 \section{Basic Circuit Elements and Frequency Response}
 \subsection{Resistors, Capacitors, Inductors, and Impedances}
@@ -30,8 +35,8 @@ Ohm's Law:
 \label{eq:1}
 V = Z I,
 \end{equation}
-where $V$ is the voltage, $Z$ is the impedance, and $I$ is the current. This is the defining equation for impedance.
-Because of the form of this equation, each circuit element is defined in terms of its $V \-- I$ relationship. The element relationships derived from device physics are
+where $V$ is the voltage, $Z$ is the impedance, and $I$ is the current. Current flows from the element's higher-voltage terminal to its lower-voltage terminal. In other words, if $V_{1} > V_{2}$, current flows from connection point (1) to connection point (2) through the element.
+Because of the form of Ohm's Law, each circuit element is defined in terms of its $V \-- I$ relationship. The element relationships derived from device physics are
 \begin{equation}
 \label{eq:2}
 V = R I ~\text{(resistor)},
@@ -165,38 +170,208 @@ I_{in} + \frac{V_{in}}{R} = 0.
 \end{equation}
 Both KVL and KCL are valid, necessary, and sufficient for dc and steady-state ac circuits. For transient analysis, they are still valid but no longer enough: you need to be able to solve the differential equations involved (numerically or symbolically).
 \section{Silicon Device Models, No Derivations}
-\subsection{Diodes}
+\subsection{Diodes and the Lambert W Function}
 The model for a diode's $I \- V$ characteristic  based on device physics is
 \begin{equation}
 \label{eq:28}
-I = I_{s} \exp \left( \frac{V_{D}}{V_{T}} \right),
+I_{D} = I_{S} \exp \left( \frac{V_{D}}{V_{T}} \right),
 \end{equation}
-where $I_{s} \approx O(\SI{1}{aA} \-- \SI{1}{fA})$ is the saturation current, $V_{D}$ is the voltage across the diode, and $V_{T}$ is the thermal voltage. The thermal voltage $V_{T}$ is given by
+where $I_{S} \approx O(\SI{1}{aA} \-- \SI{1}{fA})$ is the saturation current, $V_{D}$ is the voltage across the diode, and $V_{T}$ is the thermal voltage. (Technically, there's a $-1$ in there too, but $I_{s} \cdot  -1 \ll 1,$ so we can ignore it to make our numerical calculations more stable.) The thermal voltage $V_{T}$ is given by
 \begin{equation}
   \begin{aligned}
 \label{eq:29}
 V_{T} &= \frac{k_{B} T}{q} \\ &= \frac{\left( \SI{8.617e-5}{\electronvolt \per \kelvin} \right) \left( \SI{300}{\kelvin} \right) }{ \left( \SI{1}{\electronvolt} \right) } = \SI{25.85}{\milli \volt}
 \end{aligned}
 \end{equation}
-at $T = \SI{300}{\kelvin} = \SI{26.85}{\celsius}$, a few degrees warmer than room temperature. If you apply too much current through or voltage across the diode, it will enter the breakdown region. At that point, the exponential model (\ref{eq:28}) is invalid, and Ohm's Law takes over. That can screw up the diode, so don't do that.
+at $T = \SI{300}{\kelvin} = \SI{26.85}{\celsius}$, a few degrees warmer than room temperature. The variables $k_{B}$ and $q$ correspond to Boltzmann's constant and the charge of a single proton, respectively. If you apply too much current through or voltage across the diode, it will enter the breakdown region. At that point, the exponential model (\ref{eq:28}) is invalid, and Ohm's Law takes over. That can screw up the diode, so don't do that.
+While we're at it, we should also show the analytic solution for the current through the diode, in case you aren't given $V_{D}$. Assume there is a circuit with three elements: a voltage source $V_{in}$, a resistor $R$, and a diode $D$. The voltage across the diode is given by $V_{D} = V_{in} - R I_{in}$, and $I_{in} = I_{D}$. The equation for the current $I_{D}$ becomes
+\begin{equation}
+\label{eq:30}
+I_{D} = I_{S} \exp \left( \frac{V_{in} - R I_{D}}{V_{T}} \right).
+\end{equation}
+We can solve this in terms of the Lambert W function. The Lambert W function is defined as follows. Given an equation
+\begin{equation}
+\label{eq:31}
+x = y e^{y},
+\end{equation}
+The solution $y(x)$ is given by
+\begin{equation}
+\label{eq:32}
+y(x) = W(x),
+\end{equation}
+where $W(x)$ is the Lambert W function. So we'll need to get the relation (\ref{eq:30}) into the form of this function.
+Multiplying both sides of (\ref{eq:30}) by $\left[ \exp \left( \frac{R I_{D}}{V_{T}} \right) \right]$, we get
+\begin{equation}
+\label{eq:33}
+I_{D} \exp \left( \frac{R I_{D}}{V_{T}} \right) = I_{S} \exp \left( \frac{V_{in}}{V_{T}} \right).
+\end{equation}
+We need the term in the exponential function and the term it's multiplied by to have the same form in order for the Lambert W function solution to work. Thus we multiply both sides by $\frac{R}{V_{T}}$.
+\begin{equation}
+\label{eq:34}
+\frac{R I_{D}}{V_{T}} \exp \left( \frac{R I_{D}}{V_{T}} \right) = \frac{R I_{S}}{V_{T}} \exp \left( \frac{V_{in}}{V_{T}} \right).
+\end{equation}
+After applying the Lambert W function solution, we get
+\begin{equation}
+\label{eq:35}
+\frac{R I_{D}}{V_{T}} = W \left[ \frac{R I_{S}}{V_{T}} \exp \left( \frac{V_{in}}{V_{T}} \right) \right].
+\end{equation}
+Solving for $I_{D},$
+\begin{equation}
+\label{eq:36}
+I_{D} = \frac{V_{T}}{R} W \left[ \frac{R I_{S}}{V_{T}} \exp \left( \frac{V_{in}}{V_{T}} \right) \right].
+\end{equation}
+Basically, the idea here is: given some equation through KVL or KCL for $V_{D}$, we can derive an analytical, Lambert W function-based solution for the current through the diode. Alternatively, you can solve the same problem iteratively, using
+\begin{equation}
+\label{eq:37}
+V_{D} = V_{D,n} + V_{T} \ln \left( \frac{I_{n+1}}{I_{n}} \right),
+\end{equation}
+where $I_{0} = I_{S}$ and $I_{1} = \frac{ V_{D} - \left( \SI{0.7}{\volt} \right) }{R}$. Each subsequent $I_{n+1} = \frac{ V_{D,n+1} - V_{D,n} }{R}$. Usually it takes about 2--3 iterations to get accuracy to the hundredths place, good enough for most applications.
 \subsection{Transistors: BJTs and MOSFETs}
+% large signal BJT
+Bipolar Junction Transistors (BJTs) are basically current amplifiers. They're modeled the same as diodes for large-signal applications. But now, the governing voltage is across the base and the emitter of the transistor and the collector current is the ``diode'', leaving us with
+\begin{equation}
+\label{eq:38}
+I_{C} = I_{S} \exp \left( \frac{V_{BE}}{V_{T}} \right).
+\end{equation}
+The current through the base $I_{B}$ and the current through the emitter $I_{E}$ are approximately given by
+\begin{equation}
+  \label{eq:39}
+  I_{C} = \beta I_{B}
+\end{equation}
+and
+\begin{equation}
+  \label{eq:40}
+  I_{E} = \alpha I_{C},
+\end{equation}
+respectively, where
+\begin{equation}
+\label{eq:41}
+\beta = \frac{I_{C}}{I_{B}}
+\end{equation}
+and
+\begin{equation}
+\label{eq:42}
+\alpha = \frac{ \beta }{ 1 + \beta }.
+\end{equation}
+The BJT $\beta$ is generally a pretty badly-controlled parameter in silicon fabs. You should design your transistor circuits to be as $\beta$-independent as possible. The BJT $\alpha \approx 1$, so don't worry about $\alpha$ too much. If all you have is $\alpha$s floating around, we can probably safely say your circuit is $\beta$-independent.
 
-\subsection{Op-Amps}
+% small signal BJT
+The small-signal model for the BJT applies if the signals vary around $\leq \SI{5}{\mV}$ in amplitude. It comes from taking a Taylor expansion of the exponential in (\ref{eq:38}) and keeping only the linear terms. It results in the following small-signal model. 
+% \begin{figure}
+%   \caption{Small-signal model of a BJT.}
+%   \includegraphics{}
+% \end{figure}
+
+% large signal MOSFET
+MOSFETs are sort of like BJTs, but with one important difference: they have no current $I_{B}$ flowing into their bases. The resulting large-signal model is different. We typically use them as cheapo current sources. If we're using the MOSFET like we're supposed to, at a normal operating point for it, the current-voltage relation goes as
+\begin{equation}
+\label{eq:43}
+I_{D} = \frac{1}{2} k_{n}' \left( \frac{W}{L} \right) \left( V_{GS} - V_{t} \right)^{2},
+\end{equation}
+where $k_{n}'$ is a device parameter, $\frac{W}{L}$ is the ratio of the junction width to the junction length, $V_{GS}$ is the gate to source voltage, and $V_{t}$ is the threshold voltage (typically around $0.2 \-- 2 \si{\V}$. If the gate to source voltage exceeds $V_{t}$, we're using the device correctly. (If it's an NMOS, $V_{GS}$ should be more \textit{positive} than $V_{t}$. If it's a PMOS, $V_{GS}$ should be more \textit{negative} than $V_{t}$.) If we're not using the device correctly, we're in what's known as the \textit{triode} region. That basically means the transistor's not on. The equation that models this region is
+\begin{equation}
+\label{eq:44}
+I_{D} = k_{n}' \left( \frac{W}{L} \right) \left[ \left( V_{GS} - V_{t} \right) V_{DS} - \frac{1}{2} V_{DS}^{2} \right],
+\end{equation}
+where $V_{DS}$ is the drain to source voltage.
+
+% small signal MOSFET
+Applying another Taylor expansion, probably, to the MOSFET equations results in the following small-signal model for a MOSFET.
+% \begin{figure}
+%   \caption{Small-signal model of a BJT.}
+%   \includegraphics{}
+% \end{figure}
+
+MOSFETS and BJTs have different terminal naming schemes, but similar applications. Who knows why that happened? Let's correlate the names anyway.
+
+\begin{center}
+  \begin{tabular}{|c|c|}
+    \hline
+  MOSFET & BJT \\
+  \hline
+  Gate & Base \\
+  Drain & Collector \\
+    Source & Emitter \\
+    \hline
+\end{tabular}
+\end{center}
+
+As for \textit{solving transistors}: typically you need to use KVL to find $V_{BE}$ or $V_{GS}$, then find whatever you need to find through more analysis. KVL is the starting point. Also, if need be, you can use the Lambert W function solution method like you can for diodes. Except, you can only use it for BJTs, and you'll be solving for $V_{BE}$.
+\subsection{Op Amps}
+Op amps are super good voltage amplifiers. For discrete-circuit voltage amps, they're often better than using a BJT. You can't use op amps at RF frequencies, so BJTs still have their use. An ideal op amp has a gain of infinity if and only if its input impedance is exactly zero.
+The circuit for a general, ideal op amp looks like this:
+% \begin{figure}
+%   \caption{Small-signal model of a BJT.}
+%   \includegraphics{}
+% \end{figure}
+
+Just replace the op amp with its circuit model and you'll be fine. The circuit analysis is generally straightforward after that. One thing's for certain: treating op amps like black boxes and using KCL everywhere won't make your algebra easier!
+
 \section{Fast Analytical Techniques}
 \subsection{N-Extra Element Theorem}
 \subsection{Input-Output Impedance Theorem}
 \subsection{Better Feedback Theorem}
 \section{Common Subcircuits}
 \subsection{Voltage and Current Dividers}
+% also are the basis for source transformation/Thévenin
+
+% A voltage divider looks like this:
+% % \begin{figure}
+% %   \caption{Small-signal model of a BJT.}
+% %   \includegraphics{}
+% % \end{figure}
+
+% Its voltage transfer function is given by
+% \begin{equation}
+% \label{eq:23}
+% G_{v} = \frac{R_{2}}{R_{2} + R_{1}} = \frac{ 1 }{ 1 + \frac{R_{1}}{R_{2}} }.
+% \end{equation}
+
+% A current divider looks like this:
+% % \begin{figure}
+% %   \caption{Small-signal model of a BJT.}
+% %   \includegraphics{}
+% % \end{figure}
+
+% Its current transfer function is given by
+% \begin{equation}
+% \label{eq:23}
+% G_{i} = \frac{ 1 }{ 1 + \frac{R_{2}}{R_{1}} }.
+% \end{equation}
+
 \subsection{Amplifier Configurations with Op Amps and Transistors}
+% Miller integrator and why it's better than the ``ideal'' one
+% Differentiator
+% Negative Impedance Converter - Inverting Amp
+% Noninverting Amp
+% Differential Amp - Differential & common mode signals
+
 
 
 \newpage
 \chapter{Digital Circuits}
-\section{Logic Equations and Gates}
+\section{Basic Gates}
+% take the logic equations from wikipedia
+% and, or, ... etc.
+% boolean algebra, demorgan, duality
+% karnaugh maps
+
+\section{Other Logic Devices}
+% combinational vs sequential
+% multiplexers, demultiplexers, flip flops
+
+\section{Common Applications}
+% Adders
+% Multipliers
+% that's all folks!
 
 \newpage
 \chapter{Electromagnetism}
+% boundary conditions, laplace and poisson.
+% map of equations for the physics part of the thing. How do you get from one quantity to another?
+% -- use a tikz mindmap for this
+% rectangular waveguides, transmission lines, smith chart
+
 
 \newpage
 \chapter{Electronic Materials}
@@ -207,8 +382,29 @@ at $T = \SI{300}{\kelvin} = \SI{26.85}{\celsius}$, a few degrees warmer than roo
 \newpage
 \chapter{Math Beyond Multivariable Calc}
 \section{Numerically-Stable Quadratic Formula}
+% For any quadratic
+% \begin{equation}
+% \label{eq:45}
+% 1 + a_{1} x + a_{2} x^{2} = 0,
+% \end{equation}
+% define a $Q$ factor,
+% \begin{equation}
+% \label{eq:46}
+% Q^{2} = \frac{a_{2}}{a_{1}^{2}}
+% \end{equation}
+% and plug it into
+% \begin{equation}
+% \label{eq:47}
+% F = \frac{1}{2} \left( 1 + \sqrt{1 - 4 Q^{2}} \right).
+% \end{equation}
+% The solution is $F$. This equation is more numerically stable than the usual quadratic formula.
+% Taken from Middlebrook's Technical Therapy course.
+\section{Delta Functions}
+% especially in Emag, where we use them to write expressions for infinitely thin things
 \section{Signals and Systems}
+% convolution integral
 \section{Probability}
+
 
 \newpage
 \chapter{Appendix: Ethics}
