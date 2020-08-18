@@ -3,7 +3,7 @@
 \subsection{Resistors, Capacitors, Inductors, and Impedances}
 % a resistor looks like x. It has y defining equation.
 % voltage dividers and current dividers
-Ohm's Law:
+\vocab{Ohm's Law} is defined as
 \begin{equation}
 \label{eq:1}
 V = Z I,
@@ -23,7 +23,7 @@ and
 \label{eq:4}
 V = L \frac{dI}{dt} ~\text{(inductor)}.
 \end{equation}
-The $s$-parameters are useful for simplifying circuit analysis. They are defined as
+The \vocab{$s$-parameters} are useful for simplifying circuit analysis. They are defined as
 \begin{equation}
 \label{eq:5}
 s = \sigma + j \omega,
@@ -68,7 +68,7 @@ and
 Z = s L ~\text{(inductor)}.
 \end{equation}
 \subsection{Transfer Functions, Poles, Zeros and Stability}
-A transfer function is any function that takes an input and gives an output. It can be any of the following:
+A \vocab{transfer function} is any function that takes an input and gives an output. It can be any of the following:
 \begin{itemize}
 \item voltage gain
  \begin{equation}
@@ -112,7 +112,7 @@ where both $N(s)$ and $D(s)$ are allowed to be some arbitrary functions of $s$. 
 \label{eq:21}
 D(s) = 1 + \frac{1}{Q} \left( \frac{s}{\omega_{\,0}} \right) + \left( \frac{s}{\omega_{\,0}} \right)^{2}
 \end{equation}
-is one such valid $D(s)$. The numerator $N(s)$ is allowed to take any form that $D(s)$ can. Now, how do we determine both the numerator and denominator of $H(s)$? It turns out that finding the \textit{roots} of both $N(s)$ and $D(s)$ is enough to determine the whole transfer function $H(s)$. In other words, all you have to do is find out what the circuit's transfer function is when the excitation $E(s) = D(s) = 0$ and when the response $R(s) = N(s) = 0$, separately. The roots of $D(s)$ correspond to \textit{poles} in the circuit. The $N(s)$ roots correspond to \textit{zeros} in the circuit. So what are poles and zeros, anyway? They correspond to what happens in the transfer function when we let $s \rightarrow 0$. Under that condition, the circuit's input becomes some dc signal.
+is one such valid $D(s)$. The numerator $N(s)$ is allowed to take any form that $D(s)$ can. Now, how do we determine both the numerator and denominator of $H(s)$? It turns out that finding the \vocab{roots} of both $N(s)$ and $D(s)$ is enough to determine the whole transfer function $H(s)$. In other words, all you have to do is find out what the circuit's transfer function is when the excitation $E(s) = D(s) = 0$ and when the response $R(s) = N(s) = 0$, separately. The roots of $D(s)$ correspond to \vocab{poles} in the circuit. The $N(s)$ roots correspond to \vocab{zeros} in the circuit. So what are poles and zeros, anyway? They correspond to what happens in the transfer function when we let $s \rightarrow 0$. Under that condition, the circuit's input becomes some dc signal.
 \begin{align}
 \label{eq:22}
  \text{Poles}\ D(s) \colon \ s \rightarrow 0 \  \text{s.t.} \  H(s) \rightarrow \infty. \\
