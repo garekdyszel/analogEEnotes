@@ -100,3 +100,14 @@
 \author{Garek Dyszel}
 \date{}
 
+\addbibresource{./bibliography.bib}
+
+\renewcommand\Re{\operatorname{Re}}
+\renewcommand\Im{\operatorname{Im}}
+
+% page number in lower-right-hand corner
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{} % empty the header and the footer
+\renewcommand{\headrulewidth}{0pt} % remove horizontal line for header
+\fancyfoot[R]{\thepage} % page number in lower-right-hand corner

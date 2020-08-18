@@ -1,13 +1,19 @@
-\subsection{Amplifier Configurations with Op Amps and Transistors}
-% Miller integrator and why it's better than the ``ideal'' one
-% Differentiator
-% Negative Impedance Converter - Inverting Amp
-% Noninverting Amp
-% Differential Amp - Differential & common mode signals
-
-
-
+\documentclass[12pt]{report}
+\include{./preamble}
+\begin{document}
+\includepdf{cover_page}
 \newpage
+\tableofcontents
+\newpage
+\chapter*{Organization}
+\addcontentsline{toc}{chapter}{Organization}
+For the Analog Circuits stuff, I organized by devices, then by techniques. This is intended to be a quick reference, so I thought it would be more convenient that way.
+
+The Fast Analytical Techniques were adapted from (\textbf{middlebrook's lectures and vorpérian's book}), and the introductory silicon device material was adapted from (\textbf{sedra and smith, 8e}).
+\newpage
+
+\include{analogcircuits}
+
 \chapter{Digital Circuits}
 \section{Basic Gates}
 % take the logic equations from wikipedia
