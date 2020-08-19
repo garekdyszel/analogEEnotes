@@ -2,9 +2,13 @@ An in-progress LaTeX repository of all my notes for my bachelor's degree in elec
 It's kind of like Evan Chen's [Napkin](https://web.evanchen.cc/napkin.html) for math. Except it's for electrical engineering.
 
 Prerequisites that I don't cover in this notepack:
+
 Calculus I, II, III and intro ODEs
+
 Linear Algebra
+
 University Physics I & II (first-year mechanics and electromagnetism, respectively)
+
 Chemistry I (first-year level)
 
 Why don't I also cover engineering design? Because it involves taking physical limits to make things cheaper to build, in 99% of cases. 
