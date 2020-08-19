@@ -1,5 +1,5 @@
-An in-progress LaTeX repository of all my notes for my bachelor's degree in electrical engineering, focusing on analog design. There's also a photonics class or two in there, too. It aims to be as comprehensive as possible.
-It's kind of like Evan Chen's [Napkin](https://web.evanchen.cc/napkin.html) for math. Except it's for electrical engineering.
+An in-progress LaTeX repository of all my notes for my bachelor's degree in electrical engineering, focusing on analog design. There's also a photonics class or two in there, too. It aims to be as concise as possible.
+It's kind of like Evan Chen's [Napkin](https://web.evanchen.cc/napkin.html) for math. Except it's for electrical engineering. If you want a more comprehensive view of the stuff I wrote down in here, check out another project Jordan Edmunds and I are working on: [Learn Electrical Engineering](https://www.learnelectricalengineering.com/).
 
 Prerequisites that I don't cover in this notepack:
 
