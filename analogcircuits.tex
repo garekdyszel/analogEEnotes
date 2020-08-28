@@ -28,15 +28,15 @@ The \vocab{$s$-parameters} are useful for simplifying circuit analysis. They are
 \label{eq:1.5}
 s = \sigma + j \omega,
 \end{equation}
-where $j = \sqrt{-1}$, $\Re\{ s \} = \sigma$, and $\Im\{ s \} = \omega$. The variable $\sigma$ accounts for any initial conditions in the system, and $\omega$ is the system frequency. We can use $s$-parameters to solve networks with \textit{zero} initial conditions in \textit{steady-state}. They reduce the derivatives to simple algebra in $\C$. \footnote{Any complex number $z$ can be written in phasor form as $|z| e^{j \omega t}$. If you take the time derivative of this, you end up with $j \omega |z| e^{j \omega t}$. So taking a time derivative in $\R$ is equivalent to multiplication by $j \omega$. For example, the equation for the capacitor becomes $I = j \omega C V$. Just set $s = j \omega$ and solve for $I$ to reproduce (\ref{eq:1.8}). A similar line of reasoning results in (\ref{eq:1.9}) for inductors.}
+where $j = \sqrt{-1}$, $\Re\{ s \} = \sigma$, and $\Im\{ s \} = \omega$. The variable $\sigma$ accounts for any initial conditions in the system, and $\omega$ is the system frequency. We can use $s$-parameters to solve networks with \textit{zero} initial conditions in \textit{steady-state}. They reduce the derivatives to simple algebra in $\C$. \footnote{Any complex number $z$ can be written in phasor form as $|z| e^{j \omega t}$. If you take the time derivative of this, you end up with $j \omega |z| e^{j \omega t}$. So taking a time derivative in $\R$ is equivalent to multiplication by $j \omega$. For example, the equation for the capacitor becomes $I = j \omega C V$. Just set $s = j \omega$ and solve for $I$ to reproduce (\cref{eq:1.8}). A similar line of reasoning results in (\cref{eq:1.9}) for inductors.}
 
-Now, if $\sigma = 0$ in (\ref{eq:1.5}), the Laplace transformation (the $s$-representation) is equivalent to the Fourier transform (the $j \omega$-representation), because whatever \textit{real-valued} signal you're working with will converge to the same thing for both. Then you're allowed to say
+Now, if $\sigma = 0$ in (\cref{eq:1.5}), the Laplace transformation (the $s$-representation) is equivalent to the Fourier transform (the $j \omega$-representation), because whatever \textit{real-valued} signal you're working with will converge to the same thing for both. Then you're allowed to say
 \begin{equation}
 \label{eq:1.6}
 s = j \omega,
 \end{equation}
 like we're typically told in EE classes. (I don't know the details of how that works, but we don't need to know. Not unless we want to be DSP specialists.)
-If the relation (\ref{eq:1.6}) holds, then we can transform the element relationships to
+If the relation (\cref{eq:1.6}) holds, then we can transform the element relationships to
 \begin{equation}
 \label{eq:1.7}
 V = R I ~\text{(resistor, no change)},
@@ -50,7 +50,7 @@ and
 \label{eq:1.9}
 V = s L I ~\text{(inductor)}.
 \end{equation}
-The impedance is defined in terms of $V$ and $I$ through Ohm's Law in (\ref{eq:1.1}) as
+The impedance is defined in terms of $V$ and $I$ through Ohm's Law in (\cref{eq:1.1}) as
 \begin{equation}
 \label{eq:1.10}
 Z = \frac{V}{I}.
@@ -158,7 +158,7 @@ where $I_{S} \approx O(\SI{1}{aA} \-- \SI{1}{fA})$ is the saturation current, $V
 V_{T} &= \frac{k_{B} T}{q} \\ &= \frac{\left( \SI{8.617e-5}{\electronvolt \per \kelvin} \right) \left( \SI{300}{\kelvin} \right) }{ \left( \SI{1}{\electronvolt} \right) } = \SI{25.85}{\milli \volt}
 \end{aligned}
 \end{equation}
-at $T = \SI{300}{\kelvin} = \SI{26.85}{\celsius}$, a few degrees warmer than room temperature. The variables $k_{B}$ and $q$ correspond to Boltzmann's constant and the magnitude of the charge of a single proton/electron, respectively. If you apply too much current through or voltage across the diode, it will enter the breakdown region. At that point, the exponential model (\ref{eq:1.28}) is invalid, and Ohm's Law takes over. That can screw up the diode. You won't be able to use it in other circuits if you do that, so don't do that.
+at $T = \SI{300}{\kelvin} = \SI{26.85}{\celsius}$, a few degrees warmer than room temperature. The variables $k_{B}$ and $q$ correspond to Boltzmann's constant and the magnitude of the charge of a single proton/electron, respectively. If you apply too much current through or voltage across the diode, it will enter the breakdown region. At that point, the exponential model (\cref{eq:1.28}) is invalid, and Ohm's Law takes over. That can screw up the diode. You won't be able to use it in other circuits if you do that, so don't do that.
 While we're at it, we should also show the analytic solution for the current through the diode, in case you aren't given $V_{D}$. Assume there is a circuit with three elements: a voltage source $V_{in}$, a resistor $R$, and a diode $D$. The voltage across the diode is given by $V_{D} = V_{in} - R I_{in}$, and $I_{in} = I_{D}$. The equation for the current $I_{D}$ becomes
 \begin{equation}
 \label{eq:1.30}
@@ -174,8 +174,8 @@ The solution $y(x)$ is given by
 \label{eq:1.32}
 y(x) = W(x),
 \end{equation}
-where $W(x)$ is the Lambert W function. So we'll need to get the relation (\ref{eq:1.30}) into the form of this function.
-Multiplying both sides of (\ref{eq:1.30}) by $\left[ \exp \left( \frac{R I_{D}}{V_{T}} \right) \right]$, we get
+where $W(x)$ is the Lambert W function. So we'll need to get the relation (\cref{eq:1.30}) into the form of this function.
+Multiplying both sides of (\cref{eq:1.30}) by $\left[ \exp \left( \frac{R I_{D}}{V_{T}} \right) \right]$, we get
 \begin{equation}
 \label{eq:1.33}
 I_{D} \exp \left( \frac{R I_{D}}{V_{T}} \right) = I_{S} \exp \left( \frac{V_{in}}{V_{T}} \right).
@@ -231,7 +231,7 @@ and
 The BJT $\beta$ is generally a pretty badly-controlled parameter in silicon fabs. You should design your transistor circuits to be as $\beta$-independent as possible. The BJT $\alpha \approx 1$, so don't worry about $\alpha$ too much. If all you have is $\alpha$s floating around in your circuit's transfer functions, we can probably safely say your circuit is $\beta$-independent.
 
 % small signal BJT
-The small-signal model for the BJT applies if the signals vary around $\leq \SI{5}{\mV}$ in amplitude. It comes from taking a Taylor expansion of the exponential in (\ref{eq:1.38}) and keeping only the linear terms. It results in the following small-signal model. 
+The small-signal model for the BJT applies if the signals vary around $\leq \SI{5}{\mV}$ in amplitude. It comes from taking a Taylor expansion of the exponential in (\cref{eq:1.38}) and keeping only the linear terms. It results in the following small-signal model. 
 % \begin{figure}
 %   \caption{Small-signal model of a BJT.}
 %   \includegraphics{}
@@ -243,7 +243,7 @@ MOSFETs are sort of like BJTs, but with one important difference: they have no c
 \label{eq:1.43}
 I_{D} = \frac{1}{2} k_{n}' \left( \frac{W}{L} \right) \left( V_{GS} - V_{t} \right)^{2},
 \end{equation}
-where $k_{n}'$ is a device parameter, $\frac{W}{L}$ is the ratio of the junction width to the junction length, $V_{GS}$ is the gate to source voltage, and $V_{t}$ is the threshold voltage (typically around $0.2 \-- 2 \si{\V}$). If the gate to source voltage exceeds $V_{t}$, we're using the device correctly. (If it's an NMOS, $V_{GS}$ should be more \textit{positive} than $V_{t}$. If it's a PMOS, $V_{GS}$ should be more \textit{negative} than $V_{t}$.) The solution for $V_{GS}$ in (\ref{eq:1.43}) is
+where $k_{n}'$ is a device parameter, $\frac{W}{L}$ is the ratio of the junction width to the junction length, $V_{GS}$ is the gate to source voltage, and $V_{t}$ is the threshold voltage (typically around $0.2 \-- 2 \si{\V}$). If the gate to source voltage exceeds $V_{t}$, we're using the device correctly. (If it's an NMOS, $V_{GS}$ should be more \textit{positive} than $V_{t}$. If it's a PMOS, $V_{GS}$ should be more \textit{negative} than $V_{t}$.) The solution for $V_{GS}$ in (\cref{eq:1.43}) is
 \begin{equation}
 \label{eq:1.44}
 V_{GS} = V_{t} \pm \sqrt{ \frac{2 I_{D}}{k_{n}' \left( \frac{W}{L} \right)}}.
@@ -332,3 +332,8 @@ Basically, this says that you can determine the pole and zero functions directly
 % Negative Impedance Converter - Inverting Amp
 % Noninverting Amp
 % Differential Amp - Differential & common mode signals
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "master"
+%%% End:
